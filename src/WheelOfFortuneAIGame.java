@@ -115,9 +115,14 @@ public class WheelOfFortuneAIGame extends WheelOfFortune{
         wheelOfFortuneAIGame.add(dumberAI);
         wheelOfFortuneAIGame.add(dumbAI);
         AllGamesRecord record = wheelOfFortuneAIGame.playAll();
-        System.out.println(record.average("dumbAI"));
-        System.out.println(record.highGameList(6));
         System.out.println(record.highGameList(3,"dumbAI"));
-        System.out.println(record.gameRecordList.size());  // or call specific functions of record
+        System.out.println(record.highGameList(3,"dumberAI"));
+        System.out.println(record.highGameList(3,"dumbestAI"));
+        System.out.println(record.average());
+        System.out.println(record.average("dumbAI"));
+        System.out.println(record.average("dumberAI"));
+        System.out.println(record.average("dumbestAI"));
+        System.out.println(record.gameRecordList.size());
+        System.out.println(record.gameRecordList);  // or call specific functions of record
     }
 }

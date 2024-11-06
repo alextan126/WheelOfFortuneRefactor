@@ -52,24 +52,11 @@ public class WheelOfFortuneAIGame extends WheelOfFortune{
     // rewrite the random phrase so each phrase is played for each player
     @Override
     public void randomPhrase() {
-        if (phraseList.isEmpty()) {
-            System.out.println("No phrases available to play.");
-            return;
-        }
-
-        // Set phrase for the current game based on index
+        // Set the phrase for the current game based on index
+        wheelOfFortunePlayer = playerList.get(indexOfPlayer);
         phrase = phraseList.get(indexOfGame);
         System.out.println("A secret phrase has been generated for player: " + wheelOfFortunePlayer);
 
-        // Update indices for the next game
-        indexOfGame++;
-        if (indexOfGame >= phraseList.size()) {
-            indexOfGame = 0;         // Reset phrase index after all phrases are played
-            indexOfPlayer++;         // Move to the next player
-            if (indexOfPlayer < playerList.size()) {
-                wheelOfFortunePlayer = playerList.get(indexOfPlayer);  // Set the new player
-            }
-        }
     }
 
     @Override
@@ -82,7 +69,6 @@ public class WheelOfFortuneAIGame extends WheelOfFortune{
         randomPhrase();
         phraseToMap();
         generateHiddenPhrase();
-
         // Main game loop
         while (characterLeft > 0) {
             char curGuess = getGuess();
@@ -97,13 +83,25 @@ public class WheelOfFortuneAIGame extends WheelOfFortune{
     }
 
     @Override
+    // check if next availabe and handle index
     public boolean playNext() {
-        boolean ifNext = indexOfPlayer < playerList.size();
-        if(ifNext){
+        boolean ifNext = indexOfPlayer < playerList.size() || indexOfGame < phraseList.size();
+
+        if (ifNext) {
+            // Reset the game state for the next round
             characterLeft = 0;
             map = new HashMap<>();
             dedupSet = new HashSet<>();
             wheelOfFortunePlayer.reset();
+            indexOfGame++;
+            if (indexOfGame >= phraseList.size()) {
+                indexOfGame = 0;
+                indexOfPlayer++;
+                if (indexOfPlayer == playerList.size()) {
+                    return false;
+                }
+
+            }
         }
 
         return ifNext;
@@ -118,7 +116,8 @@ public class WheelOfFortuneAIGame extends WheelOfFortune{
         wheelOfFortuneAIGame.add(dumbAI);
         AllGamesRecord record = wheelOfFortuneAIGame.playAll();
         System.out.println(record.average("dumbAI"));
-        System.out.println(record.highGameList(3));
-        System.out.println(record);  // or call specific functions of record
+        System.out.println(record.highGameList(6));
+        System.out.println(record.highGameList(3,"dumbAI"));
+        System.out.println(record.gameRecordList.size());  // or call specific functions of record
     }
 }

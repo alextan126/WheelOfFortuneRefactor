@@ -111,9 +111,12 @@ public class WheelOfFortuneAIGame extends WheelOfFortune{
         DumbestAI dumbestAI = new DumbestAI();
         DumberAI dumberAI = new DumberAI();
         DumbAI dumbAI = new DumbAI();
-        WheelOfFortuneAIGame wheelOfFortuneAIGame = new WheelOfFortuneAIGame(dumbestAI);
-        wheelOfFortuneAIGame.add(dumberAI);
-        wheelOfFortuneAIGame.add(dumbAI);
+        List<WheelOfFortunePlayer> playerList = new ArrayList<>();
+        playerList.add(dumbAI);
+        playerList.add(dumberAI);
+        playerList.add(dumbestAI);
+        WheelOfFortuneAIGame wheelOfFortuneAIGame = new WheelOfFortuneAIGame(playerList);
+
         AllGamesRecord record = wheelOfFortuneAIGame.playAll();
         System.out.println(record.highGameList(3,"dumbAI"));
         System.out.println(record.highGameList(3,"dumberAI"));
